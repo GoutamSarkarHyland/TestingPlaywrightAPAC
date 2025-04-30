@@ -32,5 +32,16 @@ test('Check if username error message is display if username field is blank', as
     const passwordErrorMessage=page.locator('text=Password is required');
     await expect(passwordErrorMessage).toBeVisible();
    });
+test('testLogin', async ({ page }) => {
+
+    await page.getByRole('textbox', { name: 'Username' }).fill('ania');
+    await page.getByRole('textbox', { name: 'Enter Password' }).fill('ania@123');
+    page.once('dialog', dialog => {
+      console.log(`Dialog message: ${dialog.message()}`);
+      dialog.dismiss().catch(() => {});
+    });
+    await page.getByRole('button', { name: 'Login' }).click();
+    await page.goto('http://localhost:4200/customer-update?username=ania');
+  });
 
 
